@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Servant has two movement states: one for being in flight, another for orbitting around a star.
+/// (I have no time to learn & do physics for this)
+/// 
+/// The Servant is in flight when launching/being launched.
+/// The Servant is in orbit when it gets close enough to a star.
+/// </summary>
 [RequireComponent(typeof(CursorOrbitter))]
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +17,9 @@ public class PlayerController : MonoBehaviour
     CursorOrbitter orbitter;
     GameObject cursor;
     Vector3 launchDirection = Vector3.zero;
+    
+    // True when in flight; false otherwise
+    bool isInFlight = true;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +48,19 @@ public class PlayerController : MonoBehaviour
     }
 
     void Launch(Vector3 direction){
+        isInFlight = true;
         launchDirection = direction;
+    }
+
+    void Orbit(){
+        isInFlight = false;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.GetComponent<Star>()){
+            Orbit();
+            Debug.Log("Hit star!");
+        }
     }
 
 }
