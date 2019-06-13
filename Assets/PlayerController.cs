@@ -2,41 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CursorOrbitter))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    float speed = 10f;
+    [SerializeField] float glideSpeed = 10f;
 
-    [SerializeField]
-    float cursorDistance = 2.0f;
-
-    [SerializeField]
-    Vector3 cursorCenter;
-
-    [SerializeField]
+    CursorOrbitter orbitter;
     GameObject cursor;
+    Vector3 launchDirection = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        orbitter = GetComponent<CursorOrbitter>();
+        cursor = orbitter.GetCursor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
         Vector3 moveDirection = new Vector3(x, y, 0);
 
         // Player Movement
-        transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-        // Cursor Placement
-        if(cursor){
-            Vector3 cursorLocation = transform.position + cursorCenter + Vector3.Normalize(moveDirection) * cursorDistance;
-            cursor.transform.position = cursorLocation;
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Launch(cursor.transform.position);
         }
+
+        Vector3 direction = (launchDirection - transform.position);
+        if(launchDirection != Vector3.zero){
+            transform.Translate(direction * glideSpeed * Time.deltaTime,Space.World);
+        }
+    }
+
+    void Launch(Vector3 direction){
+        launchDirection = direction;
     }
 
 }

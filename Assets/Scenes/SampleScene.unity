@@ -822,6 +822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5006512736496855496}
   - component: {fileID: 8296172667502582748}
+  - component: {fileID: 8296172667502582749}
   m_Layer: 0
   m_Name: bean boi - phat cen
   m_TagString: Untagged
@@ -841,7 +842,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f3be6f7b556f94d8e3c8a197c55dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  cursorDistance: 2
-  cursorCenter: {x: 0, y: 1.25, z: 0}
+  speed: 5
+  cursorDistance: 6
+  cursorCenter: {x: 0, y: 0, z: 0}
   cursor: {fileID: 577790685}
+--- !u!114 &8296172667502582749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667502582747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72196cbea36ec574684e90cef1fc6e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: {fileID: 577790685}
+  speed: 100
