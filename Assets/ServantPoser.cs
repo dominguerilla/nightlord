@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CursorOrbitter))]
 public class ServantPoser : MonoBehaviour
 {
+    [SerializeField] CursorOrbitter orbitter;
     [SerializeField] float speed = 100f;
 
-    CursorOrbitter orbitter;
     GameObject cursor;
 
     private void Start() {
-        orbitter = GetComponent<CursorOrbitter>();
         cursor = orbitter.GetCursor();
     }
 
