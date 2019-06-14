@@ -13,10 +13,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float glideSpeed = 10f;
+    [SerializeField] float orbitSpeed = 10f;
+    [SerializeField] float orbitRadius = 1f;
 
-    CursorOrbitter orbitter;
+    CursorOrbitter cursorOrbitter;
     GameObject cursor;
+
     Vector3 launchDirection = Vector3.zero;
+
+    GameObject orbittedObject;
     
     // True when in flight; false otherwise
     bool isInFlight = true;
@@ -24,8 +29,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        orbitter = GetComponent<CursorOrbitter>();
-        cursor = orbitter.GetCursor();
+        cursorOrbitter = GetComponent<CursorOrbitter>();
+        cursor = cursorOrbitter.GetCursor();
     }
 
     // Update is called once per frame
@@ -41,25 +46,35 @@ public class PlayerController : MonoBehaviour
             Launch(cursor.transform.position);
         }
 
+        // Updating movement
+        // Flight mode
         Vector3 direction = (launchDirection - transform.position);
-        if(launchDirection != Vector3.zero){
+        if(isInFlight && launchDirection != Vector3.zero){
             transform.Translate(direction * glideSpeed * Time.deltaTime,Space.World);
+        }
+
+        //Orbit mode
+        if(!isInFlight){
+            transform.RotateAround(orbittedObject.transform.position, Vector3.forward, orbitSpeed * Time.deltaTime);
+            Vector3 desiredPosition = (transform.position - orbittedObject.transform.position).normalized * orbitRadius + orbittedObject.transform.position;
+            transform.position = Vector3.MoveTowards(transform.position, desiredPosition, orbitSpeed * Time.deltaTime);
         }
     }
 
     void Launch(Vector3 direction){
         isInFlight = true;
         launchDirection = direction;
+        this.orbittedObject = null;
     }
 
-    void Orbit(){
+    void Orbit(GameObject orbittedObject){
+        this.orbittedObject = orbittedObject;
         isInFlight = false;
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.GetComponent<Star>()){
-            Orbit();
-            Debug.Log("Hit star!");
+        if(isInFlight && other.gameObject.GetComponent<Star>()){
+            Orbit(other.gameObject);
         }
     }
 

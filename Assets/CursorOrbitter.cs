@@ -30,8 +30,10 @@ public class CursorOrbitter : MonoBehaviour
         Vector3 inputDirection = new Vector3(x, y, 0);
 
         // Cursor Placement
-        Vector3 cursorLocation = transform.position + cursorOffset + Vector3.Normalize(inputDirection) * cursorDistance;
-        this.cursor.transform.position = cursorLocation;
+        if(inputDirection != Vector3.zero){
+            Vector3 cursorLocation = transform.position + cursorOffset + Vector3.Normalize(inputDirection) * cursorDistance;
+            this.cursor.transform.position = cursorLocation;
+        }
 
     }
 

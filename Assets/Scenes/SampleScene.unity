@@ -846,6 +846,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glideSpeed: 10
+  orbitSpeed: 300
+  orbitRadius: 2
 --- !u!114 &8296172667502582749
 MonoBehaviour:
   m_ObjectHideFlags: 0
