@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.GetComponent<Star>()){
+        if(other.gameObject.GetComponent<Star>()){
             Orbit();
             Debug.Log("Hit star!");
         }

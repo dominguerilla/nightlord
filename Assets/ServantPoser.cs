@@ -17,7 +17,7 @@ public class ServantPoser : MonoBehaviour
     void Update()
     {
         Glide1Init(cursor.transform.position);
-        Glide1(cursor.transform.position);
+        //Glide1(cursor.transform.position);
 
         if(Input.GetKeyDown(KeyCode.C)){
             Debug.Log(cursor.transform.position - transform.position);

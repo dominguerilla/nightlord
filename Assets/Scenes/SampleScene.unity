@@ -655,7 +655,6 @@ GameObject:
   - component: {fileID: 3248338880945945328}
   - component: {fileID: 2834078681483947555}
   - component: {fileID: 6806638069161575123}
-  - component: {fileID: 2534866581275754055}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -663,20 +662,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &2534866581275754055
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2534866581275754054}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.9
-  m_Height: 1.6
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.90000004, z: -0.10000001}
 --- !u!33 &2834078681483947555
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -783,7 +768,7 @@ Transform:
   m_GameObject: {fileID: 8296172667502582747}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
   m_LocalPosition: {x: -11.51, y: -1.48, z: -0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 3248338880945945328}
   - {fileID: 577790686}
@@ -839,6 +824,8 @@ GameObject:
   - component: {fileID: 8296172667502582748}
   - component: {fileID: 8296172667502582750}
   - component: {fileID: 8296172667502582749}
+  - component: {fileID: 8296172667502582752}
+  - component: {fileID: 8296172667502582751}
   m_Layer: 0
   m_Name: bean boi - phat cen
   m_TagString: Untagged
@@ -888,3 +875,32 @@ MonoBehaviour:
   cursor: {fileID: 577790685}
   cursorDistance: 6
   cursorOffset: {x: 0, y: 0, z: 0}
+--- !u!54 &8296172667502582751
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667502582747}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &8296172667502582752
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667502582747}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 0.33, z: -0.09}
