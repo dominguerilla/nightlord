@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
 
         // Updating movement
         // Flight mode
-        Vector3 direction = (launchDirection - transform.position);
         if(isInFlight && launchDirection != Vector3.zero){
+            Vector3 direction = (launchDirection - transform.position);
             transform.Translate(direction * glideSpeed * Time.deltaTime,Space.World);
         }
 
