@@ -13,6 +13,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float glideSpeed = 10f;
+    [SerializeField] float glideScalar = 3f;
     [SerializeField] float orbitSpeed = 10f;
     [SerializeField] float orbitRadius = 1f;
 
@@ -36,10 +37,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-
-        Vector3 moveDirection = new Vector3(x, y, 0);
 
         // Player Movement
         if(Input.GetKeyDown(KeyCode.Space)){
