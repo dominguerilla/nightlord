@@ -19,13 +19,12 @@ public class PlayerController : MonoBehaviour
 
     CursorOrbitter cursorOrbitter;
     GameObject cursor;
-
-    Vector3 launchDirection = Vector3.zero;
-
     GameObject orbittedObject;
-    
+
     // True when in flight; false otherwise
     bool isInFlight = true;
+    Vector3 launchDirection = Vector3.zero;
+    bool hasLaunched = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,15 +38,14 @@ public class PlayerController : MonoBehaviour
     {
 
         // Player Movement
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(!hasLaunched && Input.GetKeyDown(KeyCode.Space)){
             Launch(cursor.transform.position);
         }
 
         // Updating movement
         // Flight mode
         if(isInFlight && launchDirection != Vector3.zero){
-            Vector3 direction = (launchDirection - transform.position);
-            transform.Translate(direction * glideSpeed * Time.deltaTime,Space.World);
+            transform.Translate(launchDirection * glideSpeed * Time.deltaTime,Space.World);
         }
 
         //Orbit mode
@@ -60,13 +58,15 @@ public class PlayerController : MonoBehaviour
 
     void Launch(Vector3 direction){
         isInFlight = true;
-        launchDirection = direction;
+        hasLaunched = true;
+        launchDirection = (direction - transform.position);
         this.orbittedObject = null;
     }
 
     void Orbit(GameObject orbittedObject){
         this.orbittedObject = orbittedObject;
         isInFlight = false;
+        hasLaunched = false;
     }
 
     private void OnTriggerEnter(Collider other) {
