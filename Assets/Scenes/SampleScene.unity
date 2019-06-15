@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f3be6f7b556f94d8e3c8a197c55dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glideSpeed: 10
+  glideSpeed: 3
   glideScalar: 3
   orbitSpeed: 300
   orbitRadius: 2

@@ -13,7 +13,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float glideSpeed = 10f;
-    [SerializeField] float glideScalar = 3f;
     [SerializeField] float orbitSpeed = 10f;
     [SerializeField] float orbitRadius = 1f;
 
