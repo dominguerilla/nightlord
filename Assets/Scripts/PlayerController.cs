@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// The Servant has two movement states: one for being in flight, another for orbitting around a star.
@@ -19,12 +20,18 @@ public class PlayerController : MonoBehaviour
     CursorOrbitter cursorOrbitter;
     GameObject cursor;
     GameObject orbittedObject;
+    public UnityEvent onLaunch { get; private set; }
+    public UnityEvent onOrbit{ get; private set; }
 
     // True when in flight; false otherwise
     bool isInFlight = true;
     Vector3 launchDirection = Vector3.zero;
     bool hasLaunched = false;
 
+    private void Awake() {
+        onLaunch = new UnityEvent();
+        onOrbit = new UnityEvent();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -60,18 +67,26 @@ public class PlayerController : MonoBehaviour
         hasLaunched = true;
         launchDirection = (direction - transform.position);
         this.orbittedObject = null;
+        onLaunch.Invoke();
     }
 
     void Orbit(GameObject orbittedObject){
         this.orbittedObject = orbittedObject;
         isInFlight = false;
         hasLaunched = false;
+        onOrbit.Invoke();
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(isInFlight && other.gameObject.GetComponent<Star>()){
+        Star otherStar = other.gameObject.GetComponent<Star>(); 
+        if(isInFlight && otherStar && !otherStar.hasBeenOrbitted()){
             Orbit(other.gameObject);
+            otherStar.OnEnterOrbit();
         }
+    }
+
+    public GameObject GetOrbittedObject(){
+        return this.orbittedObject;
     }
 
 }
