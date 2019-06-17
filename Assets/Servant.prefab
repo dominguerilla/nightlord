@@ -199,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 8813467709414565730}
   m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
   m_LocalPosition: {x: -11.51, y: -1.48, z: -0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2628479551894931017}
   - {fileID: 679576499069410919}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f3be6f7b556f94d8e3c8a197c55dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glideSpeed: 3
+  glideSpeed: 6
   orbitSpeed: 300
   orbitRadius: 2
 --- !u!114 &8813467709414565735

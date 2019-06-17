@@ -10,15 +10,26 @@ using UnityEngine.Events;
 /// 2. Once there is enough orbittedStars, it waits for the next time the player launches (that way, fusion starts after the player leaves the last required star)
 /// 3. Once the player launches, FuseStars() is called, which makes the Stars start moving towards each other
 /// 4. This class waits until all stars have moved together, and then destroys them.
-/// 
+///
+/// Note that this component is destroyed and recreated frequently.
 /// TODO: I don't think this class can handle more than one fusion process at a time. Fix that
 /// </summary>
 public class StarFuser : MonoBehaviour
 {
     [SerializeField] int requiredStarsForFusion = 3;
     PlayerController player;
-    List<Star> orbittedStars = new List<Star>(), starsToFuse = new List<Star>();
+
+    #region Star lists
+    // Stars that are required to be fused before the exit portal opens
+    List<Star> requiredStars = new List<Star>();
+    
+    // Stars that the player has recently orbitted. Clears once the player reaches the required number to fuse.
+    List<Star> orbittedStars = new List<Star>();
+
+    // Stars that are currently participating in a fusion process. NOTE: only one set of stars should be included in this at a time.
+    List<Star> starsToFuse = new List<Star>();
     int numOfStarsWaitingFor = 0;
+    #endregion
 
     UnityAction fuseDelegate = null;
     UnityAction starDecrementDelegate = null;
@@ -27,9 +38,12 @@ public class StarFuser : MonoBehaviour
     // reset to false once fully fused.
     bool startedFuse = false;
 
+    ExitPortal exitPortal = null;
+
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
+        exitPortal = GameObject.FindObjectOfType<ExitPortal>();
         player.onOrbit.AddListener(AddStar);
         fuseDelegate = FuseStars;
         starDecrementDelegate = DecrementStarWaitCount;
@@ -42,6 +56,28 @@ public class StarFuser : MonoBehaviour
             player.onLaunch.AddListener(fuseDelegate);
             startedFuse = true;
         }
+       
+        bool allStarsFused = CheckRequiredStars();
+        if(allStarsFused){
+            exitPortal.OpenPortal();
+        }
+    }
+
+    /// <summary>
+    /// Adds star to the required stars list. This star must be fused in order for the portal to be opened.
+    /// </summary>
+    /// <param name="star"></param>
+    public void Register(Star star){
+        requiredStars.Add(star);
+    }
+
+    bool CheckRequiredStars(){
+        foreach(Star star in requiredStars){
+            if(!star.isFusing()){
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -52,8 +88,7 @@ public class StarFuser : MonoBehaviour
         if(star){
             orbittedStars.Add(star);
 
-            StarRotator rotator = star.GetComponent<StarRotator>();
-            rotator.ChangeSpeed(2f);
+            star.SetReadyForFusion();
         }
     }
 
@@ -67,7 +102,7 @@ public class StarFuser : MonoBehaviour
         StartCoroutine(WaitForStars(starsToFuse));
  
         foreach (Star star in starsToFuse) {
-            star.MoveTowards(center);
+            star.StartFusing(center);
         }
     }
 

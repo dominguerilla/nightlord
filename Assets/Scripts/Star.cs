@@ -12,7 +12,11 @@ public class Star : MonoBehaviour
     bool wasOrbitted = false;
 
     Vector3 targetDestination = Vector3.zero;
+
+    // returns true when not in motion
     bool isAtDestination = true;
+    // returns true when SetReadyForFusion has already been called
+    bool readyForFusion = false;
 
     private void Awake() {
         onEnterOrbit = new UnityEvent();
@@ -22,13 +26,23 @@ public class Star : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       RegisterStar(); 
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetReadyForFusion(){
+        readyForFusion = true;
+        StarRotator rotator = GetComponent<StarRotator>();
+        if(rotator) rotator.ChangeSpeed(2f);
+    }
+
+    public void StartFusing(Vector3 fuseCenter){
+        MoveTowards(fuseCenter);
     }
 
     public void MoveTowards(Vector3 target) {
@@ -48,6 +62,10 @@ public class Star : MonoBehaviour
         return this.wasOrbitted;
     }
 
+    public bool isFusing(){
+        return readyForFusion;
+    }
+
     IEnumerator TranslateStar() {
         Vector3 direction = targetDestination - transform.position;
         while(Vector3.Distance(transform.position, targetDestination) > 0.5f) {
@@ -63,5 +81,10 @@ public class Star : MonoBehaviour
         onReachDestination.Invoke();
         isAtDestination = true;
         targetDestination = Vector3.zero;
+    }
+
+    void RegisterStar(){
+        StarFuser fuser = GameObject.FindObjectOfType<StarFuser>();
+        fuser.Register(this);
     }
 }
