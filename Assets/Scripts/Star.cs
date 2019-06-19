@@ -42,6 +42,12 @@ public class Star : MonoBehaviour
     }
 
     public void StartFusing(Vector3 fuseCenter){
+        // in case there's a mover component on this
+        Mover mover = GetComponent<Mover>();
+        if(mover){
+            mover.StopPingPong();
+        }
+
         MoveTowards(fuseCenter);
     }
 
