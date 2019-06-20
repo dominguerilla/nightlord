@@ -10,6 +10,8 @@ public class ScreenLoader : MonoBehaviour
 {
     // The time to wait AFTER LoadNextScreen is called, BEFORE the next screen is loaded
     [SerializeField] float timeToExit = 2f;
+    // The object containing the Start Menu UI, which will be disabled when starting the game
+    [SerializeField] GameObject startMenu;
     // A screen should be a gameobject with the player, all the stars, and the exit, as well as any other props needed.
     public GameObject[] Levels;
 
@@ -19,19 +21,13 @@ public class ScreenLoader : MonoBehaviour
     PlayerController currentPlayer;
     int currentScreenIndex = 0;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R)){
-            if(!screenIsLoaded){
-                LoadScreen(currentScreenIndex);
-            }else{
-                ResetScreen();
-            }
+        if(!screenIsLoaded && Input.GetKeyDown(KeyCode.Space)){
+            startMenu.SetActive(false);
+            LoadScreen(currentScreenIndex);
+        } else if(screenIsLoaded && Input.GetKeyDown(KeyCode.R)){
+            ResetScreen();
         }
     }
 
