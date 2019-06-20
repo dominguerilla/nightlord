@@ -17,16 +17,19 @@ public class ScreenLoader : MonoBehaviour
 
     Vector3 screenSpawnLocation = Vector3.zero;
     GameObject currentScreen = null;
-    bool screenIsLoaded = false;
+    bool gameIsLoaded = false;
     PlayerController currentPlayer;
     int currentScreenIndex = 0;
 
+    // true when a level is about to load, false otherwise
+    bool isScreenLoading = false;
+
     void Update()
     {
-        if(!screenIsLoaded && Input.GetKeyDown(KeyCode.Space)){
+        if(!gameIsLoaded && Input.GetKeyDown(KeyCode.Space)){
             startMenu.SetActive(false);
             LoadScreen(currentScreenIndex);
-        } else if(screenIsLoaded && Input.GetKeyDown(KeyCode.R)){
+        } else if(gameIsLoaded && !isScreenLoading && Input.GetKeyDown(KeyCode.R)){
             ResetScreen();
         }
     }
@@ -43,7 +46,7 @@ public class ScreenLoader : MonoBehaviour
         
         GameObject screen = Levels[screenIndex];
         currentScreen = GameObject.Instantiate<GameObject>(screen, screenSpawnLocation, screen.transform.rotation);
-        screenIsLoaded = true;
+        gameIsLoaded = true;
         currentPlayer = GameObject.FindObjectOfType<PlayerController>();
         currentPlayer.onExit.AddListener(StartLoadingNextScreen);
     }
@@ -53,10 +56,12 @@ public class ScreenLoader : MonoBehaviour
     }
 
     IEnumerator LoadNextScreen(){
+        isScreenLoading = true;
         yield return new WaitForSeconds(timeToExit);
         DestroyCurrentScreen();
         currentScreenIndex++;
         LoadScreen(currentScreenIndex);
+        isScreenLoading = false;
     }
 
     void DestroyCurrentScreen(){
