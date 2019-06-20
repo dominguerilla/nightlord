@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class ScreenLoader : MonoBehaviour
 {
+    // The time to wait AFTER LoadNextScreen is called, BEFORE the next screen is loaded
+    [SerializeField] float timeToExit = 2f;
     // A screen should be a gameobject with the player, all the stars, and the exit, as well as any other props needed.
     public GameObject[] Levels;
 
@@ -47,10 +49,15 @@ public class ScreenLoader : MonoBehaviour
         currentScreen = GameObject.Instantiate<GameObject>(screen, screenSpawnLocation, screen.transform.rotation);
         screenIsLoaded = true;
         currentPlayer = GameObject.FindObjectOfType<PlayerController>();
-        currentPlayer.onExit.AddListener(LoadNextScreen);
+        currentPlayer.onExit.AddListener(StartLoadingNextScreen);
     }
 
-    void LoadNextScreen(){
+    void StartLoadingNextScreen(){
+        StartCoroutine(LoadNextScreen());
+    }
+
+    IEnumerator LoadNextScreen(){
+        yield return new WaitForSeconds(timeToExit);
         DestroyCurrentScreen();
         currentScreenIndex++;
         LoadScreen(currentScreenIndex);

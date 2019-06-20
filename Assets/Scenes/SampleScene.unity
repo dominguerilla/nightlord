@@ -307,7 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ba44131275836469da45f1f73b0184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToExit: 2
   Levels:
-  - {fileID: 8005879906078406163, guid: ec5ed8a9bb2b5eb4f8a461f962b07b25, type: 3}
   - {fileID: 8005879906078406163, guid: 9d7c0017c99f46a4a8805564cea39629, type: 3}
+  - {fileID: 8005879906078406163, guid: ec5ed8a9bb2b5eb4f8a461f962b07b25, type: 3}
   - {fileID: 8005879906078406163, guid: ea2b20afbc007be48bbaa294fc436619, type: 3}

@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 8813467709414565733}
   - component: {fileID: 8813467709414565735}
   - component: {fileID: 8813467709414565732}
+  - component: {fileID: 3109040199112207495}
   - component: {fileID: 8813467709414565721}
   - component: {fileID: 8813467709414565734}
   - component: {fileID: 8296172667502582753}
@@ -250,6 +251,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orbitter: {fileID: 8813467709414565735}
   speed: 100
+--- !u!114 &3109040199112207495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813467709414565730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecc6d96e9372824ba7b62f79cfc750d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &8813467709414565721
 SphereCollider:
   m_ObjectHideFlags: 0
