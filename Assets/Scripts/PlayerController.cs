@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
             ExitPortal portal = other.gameObject.GetComponent<ExitPortal>();
             if(portal && portal.isPortalOpen()){
                 onExit.Invoke();
+                portal.TriggerExit();
             }
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ServantPoser : MonoBehaviour
 {
     [SerializeField] CursorOrbitter orbitter;
-    [SerializeField] float speed = 100f;
+    public GameObject playerMesh;
 
     GameObject cursor;
 
@@ -16,22 +16,12 @@ public class ServantPoser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Glide1Init(cursor.transform.position);
-        //Glide1(cursor.transform.position);
-
-        if(Input.GetKeyDown(KeyCode.C)){
-            Debug.Log(cursor.transform.position - transform.position);
-        }
-        if(Input.GetKeyDown(KeyCode.R)){
-            Debug.Log(transform.up);
-        }
+        Point(cursor.transform.position);
     }
 
-    void Glide1Init(Vector3 referencePoint){
-        transform.up = referencePoint - transform.position;
+    void Point(Vector3 referencePoint){
+        Vector3 direction = referencePoint - playerMesh.transform.position;        
+        playerMesh.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
     }
 
-    void Glide1(Vector3 referencePoint){
-        transform.Rotate(Vector3.up, speed * Time.deltaTime, Space.World);
-    }
 }
