@@ -69,7 +69,7 @@ public class ScreenLoader : MonoBehaviour
         Destroy(currentScreen);
     }
 
-    void ResetScreen(){
+    public void ResetScreen(){
         DestroyCurrentScreen();
         LoadScreen(currentScreenIndex);
     }

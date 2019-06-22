@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExitPortal : MonoBehaviour
 {
     bool isOpen = false;
     MeshRenderer render;
     ParticleSystem particleSystem;
+
+    // This is literally for the one portal in the first level that has text
+    Text text;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +20,8 @@ public class ExitPortal : MonoBehaviour
             render = GetComponentInChildren<MeshRenderer>();
         }
         render.enabled = false;
+        text = GetComponentInChildren<Text>();
+        if(text) text.enabled = false;
         particleSystem = GetComponent<ParticleSystem>();
     }
 
@@ -27,6 +33,7 @@ public class ExitPortal : MonoBehaviour
 
     public void OpenPortal(){
         render.enabled = true;
+        if(text) text.enabled = true;
         isOpen = true;
     }
 

@@ -104,6 +104,10 @@ public class PlayerController : MonoBehaviour
                 onExit.Invoke();
                 portal.TriggerExit();
             }
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if(enemy){
+                enemy.TriggerPlayerDeath();
+            }
         }
     }
 
