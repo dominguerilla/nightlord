@@ -1,37 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// On every frame, 'poses' the servant according to the currently active posing function.
+/// Switches the pose function every time the player launches.
+/// </summary>
 public class ServantPoser : MonoBehaviour
 {
     [SerializeField] CursorOrbitter orbitter;
-    [SerializeField] float speed = 100f;
+    public GameObject playerMesh;
 
+    PlayerController player;
     GameObject cursor;
+    UnityAction poseFunction;
+
+    bool poseFlag = false;
 
     private void Start() {
+        player = GameObject.FindObjectOfType<PlayerController>();
+        SetNextPoseFunction();
+        player.onLaunch.AddListener(SetNextPoseFunction);
         cursor = orbitter.GetCursor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Glide1Init(cursor.transform.position);
-        //Glide1(cursor.transform.position);
-
-        if(Input.GetKeyDown(KeyCode.C)){
-            Debug.Log(cursor.transform.position - transform.position);
-        }
-        if(Input.GetKeyDown(KeyCode.R)){
-            Debug.Log(transform.up);
-        }
+        poseFunction.Invoke();
     }
 
-    void Glide1Init(Vector3 referencePoint){
-        transform.up = referencePoint - transform.position;
+    void SetNextPoseFunction(){
+        
+        if(!poseFlag){
+            poseFunction = PointTowardsCursor;
+        }else{
+            playerMesh.transform.right = cursor.transform.position - playerMesh.transform.position;
+            poseFunction = RotateAroundYAxis;
+        }
+        poseFlag = !poseFlag;
     }
 
-    void Glide1(Vector3 referencePoint){
-        transform.Rotate(Vector3.up, speed * Time.deltaTime, Space.World);
+    void PointTowardsCursor(){
+        Vector3 direction = cursor.transform.position - playerMesh.transform.position;        
+        playerMesh.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
+    }
+
+    void RotateAroundYAxis(){
+        playerMesh.transform.Rotate(transform.up, 300 * Time.deltaTime, Space.Self);
     }
 }
